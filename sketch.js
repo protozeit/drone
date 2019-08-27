@@ -14,11 +14,11 @@ let turbo = 0;
 let stop = 0;
 
 function preload() {
-  drone_sprite = loadImage("sprites/d.png");
-  guy_sprite1 = loadImage("sprites/RedHackerGuy.png");
-  guy_sprite2 = loadImage("sprites/RedHackerGuy_HandsUp.png");
-  guy_sprite3 = loadImage("sprites/RedHackerGuy_HeadDown.png");
-  logo = loadImage("sprites/logo-pixelated.png");
+  drone_sprite = loadImage("assets/sprites/d.png");
+  guy_sprite1 = loadImage("assets/sprites/RedHackerGuy.png");
+  guy_sprite2 = loadImage("assets/sprites/RedHackerGuy_HandsUp.png");
+  guy_sprite3 = loadImage("assets/sprites/RedHackerGuy_HeadDown.png");
+  logo = loadImage("assets/sprites/logo-pixelated.png");
 }
 
 function setup() {

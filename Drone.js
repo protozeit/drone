@@ -48,7 +48,8 @@ function Drone() {
 		}
 		if (this.position.y > windowHeight - drone_sprite.height*this.scale) {
 			this.position.y = windowHeight - drone_sprite.height*this.scale;
-			this.velocity.y = -this.velocity.y;
+			// no bounce on the ground
+			// this.velocity.y = -this.velocity.y;
 			up = 0;
 			down = 0;
 			turbo = 0
