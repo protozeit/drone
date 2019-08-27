@@ -14,4 +14,4 @@ $ php -S 127.0.0.1:8000
 
 # Screenshots
 
-![first prototype](screenshots/1)
+![first prototype](screenshots/1.png)
