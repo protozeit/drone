@@ -10,6 +10,7 @@ let right = 0;
 let left = 0;
 let up = 0;
 let down = 0;
+let turbo = 0;
 
 function preload(){
   drone_sprite = loadImage('sprites/colored_drone.png');
@@ -31,6 +32,7 @@ function draw() {
   image(logo, windowWidth/2 - (logo.width/2), 10);
   guy.animate(0.1, 10, windowHeight - guy_sprite1.height*0.15, guy_sprite1.width*0.15, guy_sprite1.height*0.15)
   d.update();
+  console.log(d.velocity);
   d.show();
 }
 
@@ -51,6 +53,9 @@ function keyPressed() {
 	if (keyCode === RIGHT_ARROW){
 		right = 1;
 	}
+	if (keyCode === SHIFT){
+		turbo = 3;
+	}
 }
 
 function keyReleased() {
@@ -65,5 +70,8 @@ function keyReleased() {
 	}
 	if (keyCode === RIGHT_ARROW){
 		right = 0;
+	}
+	if (keyCode === SHIFT){
+		turbo = 0;
 	}
 }

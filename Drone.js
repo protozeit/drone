@@ -7,13 +7,13 @@ function Drone() {
   	// air resitance
   	this.c = 0.02;
   	// movement speed
-  	this.speed = 2.5;
+  	this.speed = 3;
 	
 
 	this.update = () => {
 		// Player input
-		this.acceleration.x = (right - left) * this.speed;
-		this.acceleration.y = (down - up) * this.speed;
+		this.acceleration.x = (right - left) * (turbo+1) * this.speed;
+		this.acceleration.y = (down - up) * (turbo+1) * this.speed;
 
 		// Add air resistance
 		let v = this.velocity.mag();
@@ -24,16 +24,34 @@ function Drone() {
 
 		this.acceleration.add(dragForce);
 
-		//collision detection
-		if (this.position.x < 0 || this.position.x > windowWidth - drone_sprite.width*this.scale) {
+		// Collision detection
+		if (this.position.x < 0) { 
+			this.position.x = 0;
 			this.velocity.x = -this.velocity.x;
 			left = 0;
 			right = 0;
+			turbo = 0;
 		}
-		if (this.position.y < 0 || this.position.y > windowHeight - drone_sprite.height*this.scale) {
+		if (this.position.x > windowWidth - drone_sprite.width*this.scale) {
+			this.position.x = windowWidth - drone_sprite.width*this.scale;
+			this.velocity.x = -this.velocity.x;
+			left = 0;
+			right = 0;
+			turbo = 0;
+		}
+		if (this.position.y < 0) { 
+			this.position.y = 0;
 			this.velocity.y = -this.velocity.y;
 			up = 0;
 			down = 0;
+			turbo = 0;
+		}
+		if (this.position.y > windowHeight - drone_sprite.height*this.scale) {
+			this.position.y = windowHeight - drone_sprite.height*this.scale;
+			this.velocity.y = -this.velocity.y;
+			up = 0;
+			down = 0;
+			turbo = 0
 		}
 
 		// propagate acceleration to movement
@@ -41,7 +59,7 @@ function Drone() {
 		this.position.add(this.velocity);
 		
 		// speed limit
-		this.velocity.limit(20);
+		this.velocity.limit(12);
 
 		this.acceleration.mult(0);
 	}
