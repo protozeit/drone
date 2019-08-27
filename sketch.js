@@ -13,10 +13,10 @@ let down = 0;
 let turbo = 0;
 
 function preload() {
-  drone_sprite = loadImage("sprites/colored_drone.png");
-  guy_sprite1 = loadImage("sprites/TheGuy.png");
-  guy_sprite2 = loadImage("sprites/hands_up.png");
-  guy_sprite3 = loadImage("sprites/head_down.png");
+  drone_sprite = loadImage("sprites/d2.png");
+  guy_sprite1 = loadImage("sprites/RedHackerGuy.png");
+  guy_sprite2 = loadImage("sprites/RedHackerGuy_HandsUp.png");
+  guy_sprite3 = loadImage("sprites/RedHackerGuy_HeadDown.png");
   logo = loadImage("sprites/logo-pixelated.png");
 }
 
