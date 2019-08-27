@@ -11,9 +11,10 @@ let left = 0;
 let up = 0;
 let down = 0;
 let turbo = 0;
+let stop = 0;
 
 function preload() {
-  drone_sprite = loadImage("sprites/d2.png");
+  drone_sprite = loadImage("sprites/d.png");
   guy_sprite1 = loadImage("sprites/RedHackerGuy.png");
   guy_sprite2 = loadImage("sprites/RedHackerGuy_HandsUp.png");
   guy_sprite3 = loadImage("sprites/RedHackerGuy_HeadDown.png");
@@ -28,7 +29,7 @@ function setup() {
 
 function draw() {
   background(255);
-  image(logo, windowWidth / 2 - logo.width / 2, 10);
+  image(logo, windowWidth / 2 - logo.width / 2, windowHeight / 2 - logo.height / 2);
   guy.animate(
     0.1,
     10,
@@ -37,7 +38,7 @@ function draw() {
     guy_sprite1.height * 0.15
   );
   d.update();
-  // console.log(d.velocity);
+  console.log(stop);
   d.show();
 }
 
@@ -61,6 +62,9 @@ function keyPressed() {
   if (keyCode === SHIFT) {
     turbo = 3;
   }
+  if (keyCode === 83) { // S key
+  	stop = 1;
+  }
 }
 
 function keyReleased() {
@@ -78,5 +82,8 @@ function keyReleased() {
   }
   if (keyCode === SHIFT) {
     turbo = 0;
+  }
+  if (keyCode === 83) { // S key
+  	stop = 0;
   }
 }
