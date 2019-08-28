@@ -5,9 +5,12 @@ let guy_sprite3;
 
 let drone_audio;
 let birdnoise;
+let music;
 
 let d;
 let guy;
+let target;
+let prelogo;
 
 let right = 0;
 let left = 0;
@@ -15,6 +18,10 @@ let up = 0;
 let down = 0;
 let turbo = 0;
 let stop = 0;
+
+function value_limit(val, min, max) {
+  return val < min ? min : (val > max ? max : val);
+}
 
 function preload() {
   drone_sprite = loadImage("assets/sprites/d.png");
@@ -25,31 +32,57 @@ function preload() {
 
   drone_audio = loadSound("assets/audio/drone.ogg");
   birdnoise = loadSound("assets/audio/birdnoise.ogg");
+  music = loadSound("assets/audio/town.ogg");
+
+  pixel_font = loadFont("assets/fonts/joystix monospace.ttf");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   d = new Drone();
   guy = new Animation(guy_sprite1, guy_sprite2, guy_sprite3);
-  birdnoise.setVolume(0.2);
+  target = createVector(windowWidth/2 - 50, windowHeight/2 - 80);
+
+  birdnoise.setVolume(0.1);
   birdnoise.loop();
+  music.setVolume(0.2);
+  music.loop();
+  drone_audio.loop();
+  drone_audio.playMode('restart');
 }
  
 function draw() {
   background(255);
+  textFont(pixel_font);
+  textSize(124);
+  textStyle(BOLD);
+  textAlign(CENTER);
+
   // drone sfx
-  drone_audio.play();
-  drone_audio.setVolume(0.02 + 0.02 * (d.velocity.mag()/12))
+  drone_audio.setVolume(0.05 + 0.05 * (d.velocity.mag()/12));
+
+  // music fx
+  let speedup = 5000 / Math.pow(dist(d.position.x, d.position.y, target.x, target.y), 2);
+  speedup = value_limit(speedup, 0, 2);
+  // console.log(speedup);
+  music.rate(1 + speedup);
 
 
-  image(logo, windowWidth / 2 - logo.width / 2, windowHeight / 2 - logo.height / 2);
+  // image(logo, windowWidth / 2 - logo.width / 2, windowHeight / 2 - logo.height / 2);
+  prelogo = pixel_font.textBounds('EITC', windowWidth / 2, windowHeight / 2);
+  noFill();
+  rect(prelogo.x, prelogo.y, prelogo.w, prelogo.h);
+  fill(50);
+  text('EITC', windowWidth / 2, windowHeight / 2);
+  
   guy.animate(
     0.1,
-    10,
+    20,
     windowHeight - guy_sprite1.height * 0.15,
     guy_sprite1.width * 0.15,
     guy_sprite1.height * 0.15
   );
+
   d.update();
   // console.log(stop);
   d.show();
