@@ -12,6 +12,27 @@ let guy;
 let target;
 let prelogo;
 
+let up_rectx;
+let up_recty;
+let up_rectw;
+let up_recth;
+
+let down_rectx;
+let down_recty;
+let down_rectw;
+let down_recth;
+
+let right_rectx;
+let right_recty;
+let right_rectw;
+let right_recth;
+
+let left_rectx;
+let left_recty;
+let left_rectw;
+let left_recth;
+
+
 let right = 0;
 let left = 0;
 let up = 0;
@@ -39,9 +60,15 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  textFont(pixel_font);
+  textSize(124);
+  textStyle(BOLD);
+  textAlign(CENTER);
+
   d = new Drone();
   guy = new Animation(guy_sprite1, guy_sprite2, guy_sprite3);
-  target = createVector(windowWidth/2 - 50, windowHeight/2 - 80);
+  
+  setup_logo();
 
   birdnoise.setVolume(0.1);
   birdnoise.loop();
@@ -53,25 +80,26 @@ function setup() {
  
 function draw() {
   background(255);
-  textFont(pixel_font);
-  textSize(124);
-  textStyle(BOLD);
-  textAlign(CENTER);
-
   // drone sfx
   drone_audio.setVolume(0.05 + 0.05 * (d.velocity.mag()/12));
 
   // music fx
-  let speedup = 5000 / Math.pow(dist(d.position.x, d.position.y, target.x, target.y), 2);
+  let speedup = 100000 / Math.pow(dist(d.position.x, d.position.y, target.x, target.y), 3);
   speedup = value_limit(speedup, 0, 2);
-  // console.log(speedup);
   music.rate(1 + speedup);
 
 
   // image(logo, windowWidth / 2 - logo.width / 2, windowHeight / 2 - logo.height / 2);
-  prelogo = pixel_font.textBounds('EITC', windowWidth / 2, windowHeight / 2);
+
+  // optional hitboxes here
   noFill();
-  rect(prelogo.x, prelogo.y, prelogo.w, prelogo.h);
+  // rect(prelogo.x, prelogo.y, prelogo.w, prelogo.h);
+  // rect(up_rectx, up_recty, up_rectw, up_recth);
+  // rect(down_rectx, down_recty, down_rectw, down_recth);
+  // rect(left_rectx, left_recty, left_rectw, left_recth);
+  // rect(right_rectx, right_recty, right_rectw, right_recth);
+
+
   fill(50);
   text('EITC', windowWidth / 2, windowHeight / 2);
   
@@ -84,12 +112,12 @@ function draw() {
   );
 
   d.update();
-  // console.log(stop);
   d.show();
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  setup_logo();
 }
 
 function keyPressed() {
@@ -132,4 +160,34 @@ function keyReleased() {
   if (keyCode === 83) { // S key
   	stop = 0;
   }
+}
+
+function setup_logo() {
+  target = createVector(windowWidth/2 - 50, windowHeight/2 - 80);
+  prelogo = pixel_font.textBounds('EITC', windowWidth / 2, windowHeight / 2);
+  // padding
+  prelogo.x -= 5;
+  prelogo.y -= 5;
+  prelogo.w += 10;
+  prelogo.h += 10;
+
+  up_rectx = prelogo.x;
+  up_recty = 0;
+  up_rectw = prelogo.w;
+  up_recth = prelogo.y;
+
+  down_rectx = prelogo.x;
+  down_recty = prelogo.y + prelogo.h;
+  down_rectw = prelogo.w;
+  down_recth = windowHeight - (prelogo.y + prelogo.h);
+
+  right_rectx = prelogo.x + prelogo.w;
+  right_recty = prelogo.y;
+  right_rectw = windowWidth - (prelogo.x + prelogo.w);
+  right_recth = prelogo.h;
+
+  left_rectx = 0;
+  left_recty = prelogo.y;
+  left_rectw = prelogo.x;
+  left_recth = prelogo.h;
 }
