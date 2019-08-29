@@ -88,23 +88,31 @@ function Drone() {
 
 	this.logo_collision = () => {
 		if (collideRectRect(this.position.x, this.position.y, drone_sprite.width*this.scale, drone_sprite.height*this.scale, prelogo.x, prelogo.y, prelogo.w, prelogo.h)) {
-			if (this.logo_side.y === -1) {
+			if (this.logo_side.y === -1) { // topside
 				this.position.y = prelogo.y - drone_sprite.height*this.scale;
+				// this.velocity.y = -this.velocity.y * 0.5;
+				// down = 0;
 				turbo = 0;
 				return;
 			}
-			if (this.logo_side.y === 1) {
+			if (this.logo_side.y === 1) { // underside
 				this.position.y = prelogo.y + prelogo.h;
+				// this.velocity.y = -this.velocity.y * 0.5;
+				// up = 0;
 				turbo = 0;
 				return;
 			}
-			if (this.logo_side.x === -1) {
+			if (this.logo_side.x === -1) { // leftside
 				this.position.x = prelogo.x - drone_sprite.width*this.scale;
+				this.velocity.x = -this.velocity.x * 0.5;
+				right = 0;
 				turbo = 0;
 				return;
 			}
-			if (this.logo_side.x === 1) {
+			if (this.logo_side.x === 1) { // rightside
 				this.position.x = prelogo.x + prelogo.w;
+				this.velocity.x = -this.velocity.x * 0.5;
+				left = 0;
 				turbo = 0;
 				return;
 			}

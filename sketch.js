@@ -40,8 +40,20 @@ let down = 0;
 let turbo = 0;
 let stop = 0;
 
+let stage2_trigger = 0;
+
 function value_limit(val, min, max) {
   return val < min ? min : (val > max ? max : val);
+}
+
+function birdnoise_loaded() {
+  birdnoise.setVolume(0.1);
+  birdnoise.loop();
+}
+
+function music_loaded() {
+  music.setVolume(0.2);
+  music.loop();
 }
 
 function preload() {
@@ -52,8 +64,6 @@ function preload() {
   logo = loadImage("assets/sprites/logo-pixelated.png");
 
   drone_audio = loadSound("assets/audio/drone.ogg");
-  birdnoise = loadSound("assets/audio/birdnoise.ogg");
-  music = loadSound("assets/audio/town.ogg");
 
   pixel_font = loadFont("assets/fonts/joystix monospace.ttf");
 }
@@ -65,15 +75,14 @@ function setup() {
   textStyle(BOLD);
   textAlign(CENTER);
 
+  birdnoise = loadSound("assets/audio/birdnoise.ogg", birdnoise_loaded);
+  music = loadSound("assets/audio/town.ogg", music_loaded);
+
   d = new Drone();
   guy = new Animation(guy_sprite1, guy_sprite2, guy_sprite3);
   
   setup_logo();
 
-  birdnoise.setVolume(0.1);
-  birdnoise.loop();
-  music.setVolume(0.2);
-  music.loop();
   drone_audio.loop();
   drone_audio.playMode('restart');
 }
