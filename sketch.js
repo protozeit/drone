@@ -41,6 +41,7 @@ let turbo = 0;
 let stop = 0;
 
 let stage2_trigger = 0;
+let stage2 = 0;
 
 function value_limit(val, min, max) {
   return val < min ? min : (val > max ? max : val);
@@ -61,7 +62,7 @@ function preload() {
   guy_sprite1 = loadImage("assets/sprites/RedHackerGuy.png");
   guy_sprite2 = loadImage("assets/sprites/RedHackerGuy_HandsUp.png");
   guy_sprite3 = loadImage("assets/sprites/RedHackerGuy_HeadDown.png");
-  logo = loadImage("assets/sprites/logo-pixelated.png");
+  logo = loadImage("assets/sprites/logo.png");
 
   drone_audio = loadSound("assets/audio/drone.ogg");
 
@@ -88,29 +89,23 @@ function setup() {
 }
  
 function draw() {
-  background(255);
-  // drone sfx
-  drone_audio.setVolume(0.05 + 0.05 * (d.velocity.mag()/12));
 
-  // music fx
-  let speedup = 100000 / Math.pow(dist(d.position.x, d.position.y, target.x, target.y), 3);
-  speedup = value_limit(speedup, 0, 2);
-  music.rate(1 + speedup);
-
-
-  // image(logo, windowWidth / 2 - logo.width / 2, windowHeight / 2 - logo.height / 2);
+  dynamic_effects();
 
   // optional hitboxes here
-  noFill();
+  // noFill();
   // rect(prelogo.x, prelogo.y, prelogo.w, prelogo.h);
   // rect(up_rectx, up_recty, up_rectw, up_recth);
   // rect(down_rectx, down_recty, down_rectw, down_recth);
   // rect(left_rectx, left_recty, left_rectw, left_recth);
   // rect(right_rectx, right_recty, right_rectw, right_recth);
 
-
-  fill(50);
-  text('EITC', windowWidth / 2, windowHeight / 2);
+  fill(0);
+  if (stage2){
+  	image(logo, windowWidth / 2 - logo.width / 2, (windowHeight / 2 - logo.height / 2) - 70);
+  }
+  else
+  	text('EITC', windowWidth / 2, windowHeight / 2);
   
   guy.animate(
     0.1,
@@ -122,6 +117,12 @@ function draw() {
 
   d.update();
   d.show();
+
+  if (stage2_trigger){
+  	push();
+  	filter(INVERT);
+  	setTimeout(function() {pop(); stage2_trigger = 0;}, 500);
+  }
 }
 
 function windowResized() {
@@ -172,7 +173,7 @@ function keyReleased() {
 }
 
 function setup_logo() {
-  target = createVector(windowWidth/2 - 50, windowHeight/2 - 80);
+  target = createVector(windowWidth/2 - 70, windowHeight/2 - 72);
   prelogo = pixel_font.textBounds('EITC', windowWidth / 2, windowHeight / 2);
   // padding
   prelogo.x -= 5;
@@ -199,4 +200,26 @@ function setup_logo() {
   left_recty = prelogo.y;
   left_rectw = prelogo.x;
   left_recth = prelogo.h;
+}
+
+function dynamic_effects() {
+  let speedup;
+
+  if (!stage2) {
+    // background fade
+    let fade = 100000 / Math.pow(dist(d.position.x, d.position.y, target.x, target.y), 2);
+    fade = value_limit(fade, 0, 100);
+    background(255 - fade);
+  
+    // music fx
+    speedup = 100000 / Math.pow(dist(d.position.x, d.position.y, target.x, target.y), 3);
+    speedup = value_limit(speedup, 0, 2);
+
+  } else {
+  	background(255);
+  	speedup = 0
+  }
+
+  drone_audio.setVolume(0.05 + 0.05 * (d.velocity.mag()/12));
+  music.rate(1 + speedup);
 }

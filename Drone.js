@@ -27,12 +27,23 @@ function Drone() {
 
 		// Collision detection
 		this.wall_collision();
-		this.logo_collision();
+		if (!stage2){
+			this.logo_collision();
+		}
 		this.update_logo_side();
 
-		/*
-		let away = dist(this.position.x, this.position.y, target.x, target.y);
+		if (!stage2) {
+			let away = dist(this.position.x, this.position.y, target.x, target.y);
+	
+			if (away < 60){
+				stage2_trigger = 1;
+				stage2 = 1;
+				this.velocity.x = random(-200, 200);
+				this.velocity.y = random(-200, 200);
+			}
+		}
 
+		/*
 		if (away < 60) {
 			this.velocity.x = random(-80, 80);
 			this.velocity.y = random(-80, 80);
