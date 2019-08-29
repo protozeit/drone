@@ -151,7 +151,7 @@ function draw() {
 	if (stage2_trigger){
 		push();
 		filter(INVERT);
-		lightning.animate(0.6, target.x - 130, 0, lightning_sprite1.width*5, lightning_sprite1.height*5);
+		lightning.animate(0.6, target.x - (target.y*0.9)/2 + 40, 0, target.y*0.9, target.y*0.9);
 		lightning_audio.play();
 		setTimeout(function() {pop(); stage2_trigger = 0;}, 400);
 	}
