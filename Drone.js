@@ -1,5 +1,5 @@
 function Drone() {
-	this.position = createVector(80, windowHeight - 120);
+  	this.position = createVector(80, windowHeight - 120);
   	this.velocity = createVector(0.1, 0);
   	this.acceleration = createVector(0, 0);
   	this.logo_side = createVector(0,0);
