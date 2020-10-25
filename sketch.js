@@ -129,10 +129,11 @@ function draw() {
 	fill(0);
 
 	if (stage2){
-		image(logo, (windowWidth / 2 - logo.width / 2) - 21, (windowHeight / 2 - logo.height / 2) - 82, logo.width*1.1, logo.height*1.1);
+		// image(logo, (windowWidth / 2 - logo.width / 2) - 21, (windowHeight / 2 - logo.height / 2) - 82, logo.width*1.1, logo.height*1.1);
+		text('Happy Birthday!', windowWidth / 2, windowHeight / 2);
 	}
 	else
-		text('EITC', windowWidth / 2, windowHeight / 2);
+		text("OIOO", windowWidth / 2, windowHeight / 2);
 	
 	guy.animate(
 		0.1,
@@ -265,7 +266,7 @@ function show_joke() {
 	textFont(pixel_font);
 	textSize(13);
 	textAlign(CENTER)
-	text(joke, prelogo.x, prelogo.y + 300, prelogo.w, 300);
+	text("Hi Ismail, Use the arrow keys to move c: Careful of lightning :3", prelogo.x, prelogo.y + 300, prelogo.w, 300);
 	pop();
 }
 
